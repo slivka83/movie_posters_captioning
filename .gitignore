@@ -1,5 +1,6 @@
-# Large dataset
+# Project specified
 data/img/
+config_private.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
