@@ -1,5 +1,5 @@
 # Project specified
-data/img/*
+data/img/
 config_private.yml
 
 # Byte-compiled / optimized / DLL files
