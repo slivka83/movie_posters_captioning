@@ -1,8 +1,10 @@
+# Large dataset
+data/img/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-.ipynb_checkpoints/
-data/img/
+
 
 # C extensions
 *.so
