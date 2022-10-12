@@ -1,4 +1,14 @@
 movie_posters_captioning
+
+1. Зарегистрироваться на https://kinopoiskapiunofficial.tech
+2. Клонировать проект
+https://github.com/slivka83/movie_posters_captioning.git
+3. Создать в корне проекта файл config_private.yml с таким содержимым
+X-API-KEY: '<X-API-KEY>'
+4. В консоли перейти в папку проекта и выполнить команду
+make
+она выполнит обработку и загрузку всех файлов
+
 ==============================
 
 A short description of the project.
