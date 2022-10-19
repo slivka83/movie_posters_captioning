@@ -1,0 +1,7 @@
+aiogram~=2.22
+environs==9.5.0
+requests
+asyncpg
+aioschedule
+django
+pillow
