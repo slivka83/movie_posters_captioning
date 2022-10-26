@@ -1,17 +1,14 @@
-version: '3.1'
+version: '3.9'
 
 services:
-
   dashboard:
     container_name: dashboard
     build:
       context: .
-    command: bash -c "python django_app.py migrate && python django_app.py runserver 0.0.0.0:8080"
+    command: bash -c "python dashboard/manage.py migrate && python dashboard/manage.py runserver 0.0.0.0:8000"
     restart: always
-    networks: 
-      - work_bot
     ports:
-      - 8080:8080
+      - 8000:8000
     env_file:
       - .env
   bot:
@@ -22,8 +19,3 @@ services:
     restart: always
     env_file:
       - .env
-    networks:
-      - bot
-networks:
-  bot:
-    driver: bridge
