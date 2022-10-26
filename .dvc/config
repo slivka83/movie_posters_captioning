@@ -1,0 +1,7 @@
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = s3://movie-posters-captioning
+    endpointurl = https://storage.yandexcloud.net
+    access_key_id = YCAJEl8jLKWoLkFXDeaCOWyP-
+    secret_access_key = YCNFplgfrEqjhWMN_5He0P1hqFdZnHtdTamYuD1f
