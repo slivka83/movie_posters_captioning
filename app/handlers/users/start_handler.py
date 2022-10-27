@@ -12,7 +12,11 @@ async def hello_message(message: Message):
     # Add user to db
     await add_user(message.from_user)
     # Starting message
-    await message.answer('Hi, {}!'.format(message.from_user.username))
+    text = 'Привет, {}!\n' \
+           'Мы команда MPC, приятно познакомиться! ☺\n' \
+           'Суть проекта - генерация описания к фильму по его постеру.\n' \
+           'Чтобы получить описание, просто пришли нам постер к любому фильму 😉'.format(message.from_user.username)
+    await message.answer(text)
 
 
 @dp.message_handler(content_types=[ContentType.PHOTO])
@@ -22,4 +26,5 @@ async def photo_response(message: Message):
     # Add to db
     await add_request(message=message, filepath=filepath)
     # Response
-    await message.answer("This function isn't working right now :(")
+    await message.answer("К сожалению, наша модель пока не готова 😔 \n"
+                         "Как только появятся результаты, мы пришлем описание к твоему постеру!")
