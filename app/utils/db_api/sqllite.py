@@ -10,16 +10,18 @@ async def add_user(user: User):
         info = (user.id, user.username, user.full_name, datetime.now())
         cursor.execute('INSERT INTO BOT_USERS (telegram_id, user_name, full_name, time_create) VALUES (?, ?, ?, ?);',
                        info)
-    connection.commit()
-    cursor.close()
+        connection.commit()
+        cursor.close()
+        return True
+    return False
 
 
-async def add_request(message: Message, filepath: str):
+async def add_request(message: Message, filepath: str, response='None'):
     connection = sqlite3.connect('dashboard/db.sqlite3')
     cursor = connection.cursor()
     cursor.execute('SELECT ID FROM BOT_USERS WHERE telegram_id={}'.format(message.from_user.id))
     user_id = cursor.fetchall()[0][0]
-    values = (user_id, filepath, 'None', datetime.now())
+    values = (user_id, filepath, response, datetime.now())
     cursor.execute('INSERT INTO BOT_USERSREQUESTS (user_id, image, response, time_create) VALUES (?, ?, ?, ?)',
                    values)
 
