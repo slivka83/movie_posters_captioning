@@ -104,6 +104,10 @@ def films_description_preproc():
         .str.replace('\n', ' ', regex=False)
         .str.replace(r'\s+', ' ', regex=True))
 
+    films_df_final['file_size'] = films_df_final['filmId'].apply(
+        lambda x: os.path.getsize(f'data/img/{x}.jpg'))
+    films_df_final = films_df_final.query('file_size > 30000')
+
     films_df.to_pickle('data/processed/films_df_final.pkl')
 
 
