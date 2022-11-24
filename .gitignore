@@ -5,6 +5,11 @@ config_private.yml
 __pycache__/
 *.py[cod]
 
+*checkpoint*
+*runs*
+*model_ru*
+*wandb*
+
 
 # C extensions
 *.so
