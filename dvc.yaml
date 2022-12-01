@@ -1,0 +1,35 @@
+stages:
+
+  getUniqFilms:
+    cmd: python3 src/data/make_dataset.py getUniqFilms
+    deps:
+      - data/external/imdb_db.csv
+      - data/external/kinopoisk.csv
+    outs:
+      - data/raw/films_set.pkl
+  
+  downloadFilmsDescription:
+    cmd: python3 src/data/make_dataset.py downloadFilmsDescription
+    deps:
+      - data/raw/films_set.pkl
+    outs:
+      - data/raw/kp_reponses.pkl
+  
+  parseFilmReponses:
+    cmd: python3 src/data/make_dataset.py parseFilmReponses
+    deps:
+      - data/raw/kp_reponses.pkl
+    outs:
+      - data/interim/films_df.pkl
+
+  filmsDescriptionPreproc:
+    cmd: python3 src/data/make_dataset.py filmsDescriptionPreproc
+    deps:
+      - data/interim/films_df.pkl
+    outs:
+      - data/interim/films_df_final.pkl
+
+  downloadImgs:
+    cmd: python3 src/data/make_dataset.py downloadImgs
+    deps:
+      - data/interim/films_df.pkl
