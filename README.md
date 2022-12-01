@@ -1,67 +1,51 @@
-movie_posters_captioning
+<h1>Movie Posters Captioning</h1>
 
-1. Зарегистрироваться на https://kinopoiskapiunofficial.tech
-2. Клонировать проект
-https://github.com/slivka83/movie_posters_captioning.git
-3. Создать в корне проекта файл config_private.yml с таким содержимым
-X-API-KEY: '<X-API-KEY>'
-4. В консоли перейти в папку проекта и выполнить команду
+Проект представляет собой развлекательный сервис по генерации подписей к фильмам посредством нейронной сети. Сеть обучена на кратком описании фильмов с сайта Кинопоиск. Поэтому по задумке сервис будет выдавать смешные подписи к фотографиям в стиле блокбастера.
+
+Сервис разрабатывался в рамках ODS курса [ML System Design](https://ods.ai/tracks/ml-system-design-22), поток осень 22/23 года.
+
+На момент разработки сервис развернут в виде телеграм-бота по адресу: https://t.me/MPC_project_bot
+
+<h2>Участники</h2>
+
+В разработке участвовали:
+- https://github.com/dumperize (https://t.me/dumperize) - DS
+- https://github.com/b-l-a-i-n (https://t.me/evgeennnn) - DS, backend
+- https://github.com/slivka83 (https://t.me/slivka_83) - DS
+
+<h2>Архитектура проекта</h2>
+
+![Архитектура проекта](arch.jpg "Архитектура проекта")
+
+<h2>Структура проекта</h2>
+
+- data - данные для обучения
+  - external - датасеты с фильмам найденные в интернете
+  - raw - ответ полученный на запрос с https://kinopoiskapiunofficial.tech
+  - interim - обработанный ответ API и сохранный в виде датафрейма
+  - processed - предобработанный текст (удалены служебные символы)
+  - img - скаченные картинки
+- models - сохраненные веса обученной модели
+- notebooks - ноутбуки участников
+- app - код бота
+- src - исходный код
+  - data - полный пайплайн формирования данных для обучения
+  - models - код обучения модели и выполнения предсказания
+- equirements.txt - библиотеки необходимые для воспроизведения результата
+- dvc.yaml - конфиг для запуска пайплана загрузки данных
+
+<h2>Воспроизведение</h2>
+
+Чтобы заново обучить модель выполните слудующие шаги:
+1. Загрузка описаний фильмов происходит с сайта Кинопоиск через API стороннего платного сервиса https://kinopoiskapiunofficial.tech. Поэтому сначала зарегестрируйтесь на https://kinopoiskapiunofficial.tech и оплатите платную подписку (на момент разработки проекта стоила 500р. бессрочно). Если возникунут проблемы свяжитесь с тех. поддержкой сервиса.
+2. Клонируйте проект на локальный компьютер:
+<pre>git clone https://github.com/slivka83/movie_posters_captioning.git</pre>
+3. Создайте в корне проекта файл config_private.yml с таким содержимым:
+<pre>X-API-KEY: 'X-API-KEY'</pre>
+где X-API-KEY - ключ, который выполучили на сайте https://kinopoiskapiunofficial.tech
+
+4. Установите все необходимы библиотеки:
+<pre>pip install req</pre>
+5. В консоли перейти в папку проекта и выполнить команду
 make
 она выполнит обработку и загрузку всех файлов
-
-==============================
-
-A short description of the project.
-
-Project Organization
-------------
-
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
-
---------
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
