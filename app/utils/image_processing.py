@@ -10,7 +10,7 @@ async def save_image(message: Message):
     photo_info = await bot.get_file(message.photo[-1].file_id)
     photo = await bot.download_file(photo_info.file_path)
     path = os.getcwd().replace('\\', '/') + '/dashboard'
-    media_root = f'/media/photo/photo_{message.photo[-1].file_id[:10]}.jpg'
+    media_root = f'/media/photo/photo_{message.photo[-1].file_id[10:-30]}.jpg'
     src = path + media_root
     with open(src, 'wb') as new_file:
         new_file.write(photo.read())
@@ -18,7 +18,7 @@ async def save_image(message: Message):
 
 
 async def process_image(image_path):
-    max_length = 16
+    max_length = 64
     num_beams = 4
     gen_kwargs = {"max_length": max_length, "num_beams": num_beams}
 
