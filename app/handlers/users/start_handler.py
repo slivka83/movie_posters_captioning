@@ -45,7 +45,7 @@ async def generate_again(call: CallbackQuery):
     last_image_filepath = await get_last_image_filepath(call)
 
     # Response
-    text_response = await process_image(last_image_filepath)
+    text_response = await process_image(last_image_filepath, augmentation=True)
     markup = InlineKeyboardMarkup().add(InlineKeyboardButton(text='Сгенерировать еще!', callback_data='gen'))
 
     await bot.send_message(text="Вот описание твоей фотографии:\n"

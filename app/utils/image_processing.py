@@ -2,8 +2,13 @@ from aiogram.types import Message
 from loader import bot, feature_extractor, model, tokenizer
 from datetime import datetime
 import os
+import numpy as np
 from PIL import Image
 import torch
+from PIL.ImageFilter import (
+   BLUR, CONTOUR, DETAIL, EDGE_ENHANCE, EDGE_ENHANCE_MORE,
+   EMBOSS, FIND_EDGES, SMOOTH, SMOOTH_MORE, SHARPEN
+)
 
 
 async def save_image(message: Message):
@@ -17,7 +22,7 @@ async def save_image(message: Message):
     return src
 
 
-async def process_image(image_path):
+async def process_image(image_path, augmentation = False):
     max_length = 64
     num_beams = 4
     gen_kwargs = {"max_length": max_length, "num_beams": num_beams}
@@ -31,6 +36,10 @@ async def process_image(image_path):
         i_image = i_image.convert(mode="RGB")
 
     # model.feat
+    # Augmentation if image
+    if augmentation:
+        i_image = distort_image(i_image)
+
     images.append(i_image)
     pixel_values = feature_extractor(images=images, return_tensors="pt").pixel_values
     pixel_values = pixel_values.to(device)
@@ -40,3 +49,17 @@ async def process_image(image_path):
     preds = tokenizer.batch_decode(output_ids, skip_special_tokens=True)
     preds = [pred.strip() for pred in preds]
     return preds[0]
+
+
+def distort_image(image: Image):
+    # rotation
+    angle = np.randint(360)
+    image_dist = image.rotate(angle)
+    # vertical flip
+    image_dist = image_dist.transpose(Image.FLIP_TOP_BOTTOM)
+    # Filters
+    filters = [BLUR, CONTOUR, DETAIL, EDGE_ENHANCE, EDGE_ENHANCE_MORE,
+   EMBOSS, FIND_EDGES, SMOOTH, SMOOTH_MORE, SHARPEN]
+    image_dist = image_dist.filter(filters[np.randint(len(filters))])
+    return image_dist
+
